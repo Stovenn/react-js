@@ -25,10 +25,10 @@ class Root extends Component {
     this.setState({ listDisplay: [...this.state.products]})
   }
 
-  componentDidUpdate(a, b){
+  componentDidUpdate(a, prevState){
     //Filter items in stock
-    if(b.checked !== this.state.checked || b.filter !== this.state.filter){
-      const list = b.products
+    if(prevState.checked !== this.state.checked || prevState.filter !== this.state.filter){
+      const list = prevState.products
         .filter(item => {
           if(this.state.checked){
             return item.productStock
@@ -37,18 +37,22 @@ class Root extends Component {
           }
         })
         .filter(item => item.productName.includes(this.state.filter))
+        
       this.setState({ listDisplay: list})
     }
   }
 
   handleChange = (e) => {
-    const name = e.target.name
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    const target = e.target
+    const name = target.name
+    const value = target.type === 'checkbox' ? target.checked : target.value
 
     this.setState({ [name]: value })
   }
 
   handleNext = () => {
+      if(this.state.listDisplay.length === 1) return ;
+
       if(this.state.startIndex === 0 && this.state.current < 2){
         this.setState({ current: this.state.current + 1} ) 
         return;
@@ -68,6 +72,8 @@ class Root extends Component {
   }
 
   handlePrevious = () => {
+    if(this.state.listDisplay.length === 1) return ;
+
     if(this.state.startIndex === 0  && this.state.current === 0 ) {
       this.setState({ current: 4, startIndex: this.state.listDisplay.length - 5 })
       return
@@ -131,7 +137,7 @@ class Root extends Component {
           Next
         </button> 
         <Card 
-          product={this.state.listDisplay[this.state.current < 2 ? this.state.current : this.state.startIndex + 2]}
+          product={this.state.listDisplay[this.state.listDisplay.length === 1 ? 0 : this.state.current < 2 ? this.state.current :  this.state.startIndex + 2]}
           addProduct = {this.handleAddProduct}
         />
       </Fragment>
