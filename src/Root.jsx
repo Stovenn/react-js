@@ -103,7 +103,6 @@ class Root extends Component {
   }
   
   render() {
-    let filteredList = this.state.products.filter(product => product.productCategory.includes(this.state.filter))
     let componentsToRender = <h3>No results</h3> 
     if (this.state.listDisplay.length > 0){
       componentsToRender = (
@@ -139,7 +138,6 @@ class Root extends Component {
         />
         {componentsToRender}
       </Fragment>
-      
     )
   }
 }
