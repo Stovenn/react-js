@@ -1,4 +1,4 @@
-export const products = [
+exports.products = [
   {
     "productId": 1001,
     "productCategory": "Category 1",
