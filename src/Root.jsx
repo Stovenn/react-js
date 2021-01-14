@@ -9,7 +9,7 @@ import data from './data/products'
 class Root extends Component {
   state = {
     products : data.products,
-    listDisplay: data.products,
+    listDisplay: [],
     startIndex: 0,
     current: 2,
     basket:{
@@ -21,21 +21,31 @@ class Root extends Component {
     checked: false
   }
 
+  componentDidMount(){
+    this.setState({ listDisplay: [...this.state.products]})
+  }
+
+  componentDidUpdate(a, b){
+    //Filter items in stock
+    if(b.checked !== this.state.checked || b.filter !== this.state.filter){
+      const list = b.products
+        .filter(item => {
+          if(this.state.checked){
+            return item.productStock
+          } else{
+            return item
+          }
+        })
+        .filter(item => item.productName.includes(this.state.filter))
+      this.setState({ listDisplay: list})
+    }
+  }
+
   handleChange = (e) => {
     const name = e.target.name
     const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
 
-    const products = [...this.state.products]
-    let filteredList
-    if (e.target.type !== "checkbox") {
-      filteredList = products.filter(item => item.productCategory.includes(value))
-    }else{
-      filteredList = products.filter(item => item.productStock === value)
-    }
-    this.setState({ 
-      [name]: value,
-      listDisplay: filteredList
-    })
+    this.setState({ [name]: value })
   }
 
   handleNext = () => {
@@ -56,7 +66,6 @@ class Root extends Component {
         return;
       }
   }
-
 
   handlePrevious = () => {
     if(this.state.startIndex === 0  && this.state.current === 0 ) {
@@ -112,6 +121,7 @@ class Root extends Component {
           products={this.state.listDisplay}
           startIndex={this.state.startIndex}
           current={this.state.current}
+          stock={this.state.checked}
         />
 
         <button href="#" onClick={() =>this.handlePrevious()} className="btn btn-secondary mx-1">

@@ -14,7 +14,7 @@ export default function searchbar (props){
                 <div className="form-check">
                     <input 
                         type="checkbox" 
-                        class="form-check-input" 
+                        className="form-check-input" 
                         name="checked"
                         checked={props.checked}
                         onChange={(e) => props.changed(e)}/>
