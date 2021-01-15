@@ -4,7 +4,7 @@ import React from "react";
 const ListItem = (props) => {
 
   return (
-    <li className={`list-group-item ${props.current === props.index ? 'active': ""}`}>
+    <li className={`list-group-item ${props.current === props.index ? 'active': ""} ${ !props.product.productStock ? 'text-danger': ""}`}>
       <><span className="font-weight-bold">{props.product.productName}</span> <span>({props.product.productCategory})</span></>
     </li>
   );

@@ -14,7 +14,7 @@ const Card = (props) => {
       <ul className="list-group list-group-flush">
         <li className="list-group-item">{props.product.productCategory}</li>
         <li className="list-group-item">{(props.product.productPrice).toFixed(2)} euros</li>
-        <li className="list-group-item"><button onClick={()=>{props.addProduct(props.product)}} className="btn btn-success">Ajouter</button></li>
+        <li className="list-group-item"><button disabled={!props.product.productStock} onClick={()=>{props.addProduct(props.product)}} className="btn btn-success">Ajouter</button></li>
       </ul>
     </div>
   );

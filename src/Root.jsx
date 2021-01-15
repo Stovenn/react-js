@@ -36,7 +36,7 @@ class Root extends Component {
             return item
           }
         })
-        .filter(item => item.productName.includes(this.state.filter))
+        .filter(item => item.productCategory.includes(this.state.filter))
         
       this.setState({ listDisplay: list})
     }
@@ -51,8 +51,6 @@ class Root extends Component {
   }
 
   handleNext = () => {
-      if(this.state.listDisplay.length === 1) return ;
-
       if(this.state.startIndex === 0 && this.state.current < 2){
         this.setState({ current: this.state.current + 1} ) 
         return;
@@ -72,8 +70,6 @@ class Root extends Component {
   }
 
   handlePrevious = () => {
-    if(this.state.listDisplay.length === 1) return ;
-
     if(this.state.startIndex === 0  && this.state.current === 0 ) {
       this.setState({ current: 4, startIndex: this.state.listDisplay.length - 5 })
       return
@@ -137,7 +133,7 @@ class Root extends Component {
           Next
         </button> 
         <Card 
-          product={this.state.listDisplay[this.state.listDisplay.length === 1 ? 0 : this.state.current < 2 ? this.state.current :  this.state.startIndex + 2]}
+          product={this.state.listDisplay[this.state.current < 2 ? this.state.current :  this.state.startIndex + 2]}
           addProduct = {this.handleAddProduct}
         />
       </Fragment>
