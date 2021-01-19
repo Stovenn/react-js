@@ -6,7 +6,7 @@ class GenderPrediction extends Component {
   };
 
   async componentDidMount() {
-    await fetch(`https://api.genderize.io/?name=khalid`)
+    await fetch(`https://api.genderize.io/?name=${this.props.match.params.name}`)
       .then((response) => response.json())
       .then(({ gender }) => {
         this.setState({ gender });
@@ -17,8 +17,8 @@ class GenderPrediction extends Component {
     return (
       <React.Fragment>
         <h3>
-          Name: some name; Gender:
-          <u>Ze gender</u>
+          Name: {this.props.match.params.name}; Gender:
+          <u>{this.state.gender}</u>
         </h3>
       </React.Fragment>
     );
